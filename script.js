@@ -6,13 +6,27 @@ function getComputerChoice() {
     return computerChoices[randomChoiceIndex];
 }
 
+let win = 'You win! Paper beats Rock!';
+let loss = 'You lose! Rock beats Scissors';
+
 function singleRound(computerSelection, playerSelection) {
-   return (playerSelection.toLowerCase() == computerSelection) ? 'Draw! Play again.'
-        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'paper') ? 'You win! Paper beats Rock!'
-        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'scissors') ? 'You lose! Rock beats Scissors'
-        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'scissors') ? 'You win! Scissors beat Paper'
-        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'rock') ? 'You lose! Paper beats Rock'
-        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'rock') ? 'You win! Rock beats Scissors!'
-        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'paper') ? 'You lose! Scissors beat Paper!'
+    return (playerSelection.toLowerCase() == computerSelection) ? 'Draw! Play again.'
+        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'paper') ? win
+        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'scissors') ? loss
+        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'scissors') ? win
+        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'rock') ? loss
+        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'rock') ? win
+        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'paper') ? loss
         : 'You lose! Out of bounds. Pick Rock, Paper, or Scissors';
 }
+
+function game() {
+    let playerAnswer = prompt('Rock, Paper, Scissors');
+    console.log(singleRound(getComputerChoice(), playerAnswer));
+}
+
+for (let gameRound = 1; gameRound <= 5; gameRound++) {
+    game();
+}
+
+   
