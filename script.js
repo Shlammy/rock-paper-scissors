@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     const computerChoices = ["rock", "paper", "scissors"];
     let arrayLength = computerChoices.length;
@@ -6,10 +9,9 @@ function getComputerChoice() {
     return computerChoices[randomChoiceIndex];
 }
 
-let win = 'You win! Paper beats Rock!';
-let loss = 'You lose! Rock beats Scissors';
-
 function singleRound(computerSelection, playerSelection) {
+    let win = 'You win! Paper beats Rock!';
+    let loss = 'You lose! Rock beats Scissors';
     return (playerSelection.toLowerCase() == computerSelection) ? 'Draw! Play again.'
         : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'paper') ? win
         : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'scissors') ? loss
@@ -22,11 +24,19 @@ function singleRound(computerSelection, playerSelection) {
 
 function game() {
     let playerAnswer = prompt('Rock, Paper, Scissors');
-    console.log(singleRound(getComputerChoice(), playerAnswer));
+    let roundResult = singleRound(getComputerChoice(), playerAnswer);
+    roundResult.substring(4, 6) == "wi" ? playerScore++ : playerScore; 
+    roundResult.substring(4, 6) == "lo" ? computerScore++ : computerScore;
+    console.log(roundResult);
+    console.log(playerScore, computerScore);
 }
 
 for (let gameRound = 1; gameRound <= 5; gameRound++) {
     game();
 }
+
+playerScore > computerScore ? console.log("You won the match!") 
+: computerScore == playerScore ? console.log("The match was a draw!")
+: console.log("You lost the match");
 
    
