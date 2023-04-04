@@ -1,42 +1,73 @@
 let playerScore = 0;
 let computerScore = 0;
+let gameRound = 0;
+const container = document.getElementById('displayContainer');
 
-function getComputerChoice() {
+let getComputerChoice = () => {
     const computerChoices = ["rock", "paper", "scissors"];
     let arrayLength = computerChoices.length;
     let randomInt = Math.random() * arrayLength;
     let randomChoiceIndex = Math.floor(randomInt);
     return computerChoices[randomChoiceIndex];
-}
+};
 
-function singleRound(computerSelection, playerSelection) {
-    let win = 'You win! Paper beats Rock!';
-    let loss = 'You lose! Rock beats Scissors';
-    return (playerSelection.toLowerCase() == computerSelection) ? 'Draw! Play again.'
-        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'paper') ? win
-        : (computerSelection == 'rock') && (playerSelection.toLowerCase() == 'scissors') ? loss
-        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'scissors') ? win
-        : (computerSelection == 'paper') && (playerSelection.toLowerCase() == 'rock') ? loss
-        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'rock') ? win
-        : (computerSelection == 'scissors') && (playerSelection.toLowerCase() == 'paper') ? loss
+let singleRound = (computerSelection, playerSelection) => {
+    let win = 'You win! ' + playerSelection + ' beats ' + computerSelection + '!';
+    let loss = 'You lose! ' + computerSelection + ' beats ' + playerSelection + '!';
+    return (playerSelection == computerSelection) ? 'Draw! Play again.'
+        : (computerSelection == 'rock') && (playerSelection == 'paper') ? win
+        : (computerSelection == 'rock') && (playerSelection == 'scissors') ? loss
+        : (computerSelection == 'paper') && (playerSelection == 'scissors') ? win
+        : (computerSelection == 'paper') && (playerSelection == 'rock') ? loss
+        : (computerSelection == 'scissors') && (playerSelection == 'rock') ? win
+        : (computerSelection == 'scissors') && (playerSelection == 'paper') ? loss
         : 'You lose! Out of bounds. Pick Rock, Paper, or Scissors';
-}
+};
 
-function game() {
-    let playerAnswer = prompt('Rock, Paper, Scissors');
+let game = (btn) => {
+    const roundResultPara = document.createElement('p');
+    const scoresPara = document.createElement('p');
+    let playerAnswer = btn.value;
     let roundResult = singleRound(getComputerChoice(), playerAnswer);
     roundResult.substring(4, 6) == "wi" ? playerScore++ : playerScore; 
     roundResult.substring(4, 6) == "lo" ? computerScore++ : computerScore;
-    console.log(roundResult);
-    console.log(playerScore, computerScore);
+    ++gameRound;
+    roundResultPara.textContent = roundResult;
+    scoresPara.textContent = playerScore + " , " + computerScore;
+    container.appendChild(roundResultPara);
+    container.appendChild(scoresPara);
+
+    if(gameRound % 5 == 0) {
+        winLossDraw();
+    }
+
+    if(gameRound > 5) {
+        clearBoard();
+        gameRound = 0;
+        computerScore = 0;
+        playerScore = 0;
+    }
+}; 
+
+let winLossDraw = () => {
+    const winLossDrawPara = document.createElement('p');
+    playerScore > computerScore ? winLossDrawPara.textContent = "You won the match!" 
+    : computerScore == playerScore ? winLossDrawPara.textContent = "The match was a draw!"
+    : winLossDrawPara.textContent = "You lost the match";
+    container.appendChild(winLossDrawPara);
+} 
+
+let clearBoard = () => {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 }
 
-for (let gameRound = 1; gameRound <= 5; gameRound++) {
-    game();
-}
 
-playerScore > computerScore ? console.log("You won the match!") 
-: computerScore == playerScore ? console.log("The match was a draw!")
-: console.log("You lost the match");
+
+
+
+
+
 
    
