@@ -1,8 +1,27 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: #cbe7f5;
+}
+
 #mainContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 100px 0px;
-    border: thick solid red;
+    height: 100%;
 }
+
+button {
+    margin-bottom: 25px;
+    background-color: #ffda79;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
